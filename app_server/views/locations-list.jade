@@ -1,73 +1,33 @@
 extends layout
-
+include _includes/sharedHTMLfunctions
 block content
   #banner.page-header
     .row
       .col-lg-6
-        h1 Seat-Tweet
-          small &nbsp; Find the best tweets!
+        h1= pageHeader.title
+          small &nbsp; #{pageHeader.strapLine}
   .row
     .col-xs-12.col-sm-10
       .row.list-group
-        .col-xs-12.list-group-item
-          h4
-            a(href="/location") Albretson's Stadium
-            small &nbsp;
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star-empty
-            span.badge.pull-right.badge-default Top 25
-          p.address Boise, ID
-          p
-            span.label.label-warning CFB
-            | &nbsp;
-            span.label.label-warning MWC
-            | &nbsp;
-        .col-xs-12.list-group-item
-          h4
-            a(href="/location") Albretson's Stadium
-            small &nbsp;
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star-empty
-            span.badge.pull-right.badge-default Top 25
-          p.address Boise, ID
-          p
-            span.label.label-warning CFB
-            | &nbsp;
-            span.label.label-warning MWC
-            | &nbsp;
-        .col-xs-12.list-group-item
-          h4
-            a(href="/location") Albretson's Stadium
-            small &nbsp;
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star
-              span.glyphicon.glyphicon-star-empty
-            span.badge.pull-right.badge-default Top 25
-          p.address Boise, ID
-          p
-            span.label.label-warning CFB
-            | &nbsp;
-            span.label.label-warning MWC
-            | &nbsp;        
+        each location in locations
+          .col-xs-12.list-group-item
+            h4
+              a(href="/location")= location.name
+              small &nbsp;
+                +outputRating(location.rating)
+              -if(location.isTop25)
+                span.badge.pull-right.badge-default Top 25
+            p.address= location.address
+            p
+              span.label.label-warning= location.sports
+              | &nbsp;
+              span.label.label-warning= location.conference
+              | &nbsp;  
+            
     .col-xs-12.col-sm-2
       .row.list-group
-        .col-xs-12.list-group-item
-          h6
-            center
-              a(href='/about/') College Football
-        .col-xs-12.list-group-item
-          h6
-            center
-              a(href='/about/') NFL
-        .col-xs-12.list-group-item
-          h6
-            center
-              a(href='/about/') NBA
+        each sport in sports
+          .col-xs-12.list-group-item
+            h6
+              center
+                a(href='/about/')= sport.name
