@@ -3,7 +3,7 @@ require('./locations');
 require('./tweets');
 var dbURI = 'mongodb://localhost/Seat-Tweet';
 if(process.env.NODE_ENV ==='production'){
-    dbURI = process.env.MONGOLAB_URI;
+    dbURI = process.env.MONGOLAB_URI_W;
 }
 mongoose.connect(dbURI);
 
