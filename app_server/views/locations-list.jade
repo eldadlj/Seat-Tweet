@@ -1,29 +1,30 @@
 extends layout
 include _includes/sharedHTMLfunctions
 block content
+  script(src="https://cdn.socket.io/socket.io-1.1.0.js")
   #banner.page-header
     .row
       .col-lg-6
         h1= pageHeader.title
           small &nbsp; #{pageHeader.strapLine}
   .row
-    .col-xs-12.col-sm-10
+    .col-lg-6
+      label(for="filter") Filter results
+      input#Filter(type="text", name="filter", ng-model="textFilter")
+  .row
+    .col-xs-12.col-sm-10(ng-controller="locationListCtrl")
+      .error {{ data.message }}
       .row.list-group
-        each location in locations
-          .col-xs-12.list-group-item
-            h4
-              a(href="/location")= location.name
-              small &nbsp;
-                +outputRating(location.rating)
-              -if(location.isTop25)
-                span.badge.pull-right.badge-default Top 25
-            p.address= location.address
-            p
-              span.label.label-warning= location.sports
-              | &nbsp;
-              span.label.label-warning= location.conference
-              | &nbsp;  
-            
+        .col-xs-12.list-group-item(ng-repeat="location in data.locations | filter: textFilter")
+          h4
+            a(href="/location-stream/:{{location._id}") {{location.name}}
+            small(rating-stars, rating="location.rating")
+          p.address {{location.address}}
+          p
+            span.label.label-warning {{location.sports}}
+            | &nbsp;
+            span.label.label-warning {{location.conference}}
+            | &nbsp;  
     .col-xs-12.col-sm-2
       .row.list-group
         each sport in sports

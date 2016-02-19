@@ -1,0 +1,31 @@
+<navigation></navigation>
+<div class="container">
+    <page-header content="vm.pageHeader"></page-header>
+
+    <div class="row">
+        <div class="col-md-2">
+            <left-navigation></left-navigation>
+        </div>
+        <div>
+            <button ng-show="vm.newTweetsCount > 0" ng-click="loadNewStreams()">New Streams Count: {{vm.newTweetsCount}}</button>
+        </div>
+        <div class="col-xs-8 col-md-8">
+            <div class="row list-group">
+                <div class="stream col-xs-8 list-group-item" ng-repeat="tweet in vm.data.tweets | orderBy: '-date'">
+                    <p>
+                    {{tweet.twid_str}}</p>
+                    <div class="instagrmDiv" ng-show="{{tweet.containsInstagram}}">
+                        <img class="instagramImg" src="{{tweet.instagram}}">
+                    </div>
+                    <div>
+                        <blockquote class="twitter-tweet" hide_tweet="true">
+                            <a href="http://twitter.com/twitter/status/{{tweet.twid_str}}"></a>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <footer-generic></footer-generic>
+</div>

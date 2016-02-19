@@ -1,0 +1,49 @@
+<navigation></navigation>
+<div class="container">
+    <page-header content="vm.pageHeader"></page-header>
+    <div class="row">
+        <div class="col-md-2">
+            <left-navigation></left-navigation>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="filter"> Filter results</label>
+                    <input id="Filter" type="text", name="filter", ng-model="textFilter">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-10">
+                    <div class="error">
+                        {{ vm.message }}
+                    </div> 
+                    <div class="row list-group">
+                        <div class="col-xs-12 list-group-item" ng-repeat="location in vm.data.locations | filter: textFilter">
+                            <h4>
+                                <a href="/#location-stream/{{ location._id}}"> {{ location.name}}</a>
+                                <small class="rating-stars" rating-stars rating="location.rating"></small>
+                            </h4>
+                            <p class="address" ng-repeat="team in location.teams">
+                                {{ team }}
+                            </p>
+                            <p>
+                                <span class="label label-warning" ng-repeat="sport in location.sports">
+                                    {{ sport }} &nbsp; 
+                                </span>
+                                | &nbsp;
+                                <span class="label label-warning" ng-repeat="conf in location.conference">
+                                    {{ conf }} &nbsp;
+                                </span> 
+                                | &nbsp;  
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <right-navigation></right-navigation>
+        </div>
+        <footer-generic></footer-generic>
+    </div>
+</div>

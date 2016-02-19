@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="seattweetApp">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Seat-Tweet</title>
+        <link rel="stylesheet" href="/bootstrap/css/sandstone.bootstrap.css">
+        <link rel="styleshet" href="/stylesheets/style.css">
+    </head>
+    <body ng-view>
+        <script>
+        window.twttr = (function (d,s,id) {
+        var t, js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
+        js.src="https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+        }(document, "script", "twitter-wjs"));
+        </script>
+        <script src="/angular/angular.min.js"></script>
+        <script src="/angular-ui/ui-bootstrap-tpls-1.1.2.min.js"></script>
+        <script src="/lib/angular-route.min.js"></script>
+        <script src="/lib/angular-sanitize.min.js"></script>
+        <script src="/lib/angular-animate.min.js"></script>
+<!--        we minified all of our client js files - when adding new filed remmember to update the minifier-->
+        <script src="/angular/seattweet.min.js"></script>
+        <script src="/javascripts/jquery-2.1.4.min.js"></script>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
+    </body>
+</html>

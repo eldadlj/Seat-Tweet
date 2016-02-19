@@ -5300,7 +5300,7 @@ a.thumbnail.active {
   padding: 10px 15px;
   margin-bottom: -1px;
   background-color: #ffffff;
-  border: 1px solid #dfd7ca;
+/*  border: 1px solid #dfd7ca;*/
 }
 .list-group-item:first-child {
   border-top-right-radius: 4px;

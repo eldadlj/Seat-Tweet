@@ -1,63 +1,23 @@
 extends layout
-
+include _includes/sharedHTMLfunctions
 block content
-  .row.page-header
-    .col-lg-12
-      h1 Albertson's Stadium
+  script(src="https://cdn.socket.io/socket.io-1.1.0.js")
+  #banner.page-header
+    .row
+      .col-lg-6
+        h1= pageHeader.title
+          small &nbsp; #{pageHeader.strapLine}
   .row
-    .col-xs-12.col-md-9
-      .row
-        .col-xs-12.col.sm-6
-          p.rating
-            span.glyphicon.glyphicon-star
-            span.glyphicon.glyphicon-star
-            span.glyphicon.glyphicon-star
-            span.glyphicon.glyphicon-star
-            span.glyphicon.glyphicon-star-empty
-          p Boise, ID
-          .panel.panel-primary
-            .panel-heading
-              h2.panel-title Info
-            .panel-body
-              span.label.label-warning
-                span.glyphicon.glyphicon-ok
-                | &nbsp; CFB
-              span.label.label-warning
-                span.glyphicon.glyphicon-ok
-                | &nbsp; MWC
-      .row
-        .col-xs-12
-          .panel.panel-primary.stream-panel
-            .panel-heading
-              center
-                h1.panel-title Streams
-            .panel-body.stream-container
-              .row
-                .stream
-                  .well.well-sm.stream-header
-                    span.rating
-                      span.glyphicon.glyphicon-star
-                      span.glyphicon.glyphicon-star
-                      span.glyphicon.glyphicon-star
-                      span.glyphicon.glyphicon-star
-                      span.glyphicon.glyphicon-star
-                    span.streamAuthor EldadLj 
-                    small.streamTimeStamp 8 31 2015
-                  .col-xs-12
-                    p Check out our seats!
-              .row
-                .stream
-                  .well.well-sm.stream-header
-                    span.rating
-                      span.glyphicon.glyphicon-star
-                      span.glyphicon.glyphicon-star
-                      span.glyphicon.glyphicon-star
-                      span.glyphicon.glyphicon-star
-                      span.glyphicon.glyphicon-star-empty
-                    span.streamAuthor Jessica 
-                    small.streamTimeStamp 8 30 2015
-                  .col-xs-12
-                    p Great Babaganush!
-    .col-xs-12.col-md-3
-      p.lead Bronco stadium is on Seat-Tweet it has enough fans sending pictures during games!
-        
+    .col-xs-12.col-sm-10(ng-controller="locationStreamCtrl")
+      .row.list-group
+        .col-xs-12.list-group-item(ng-repeat="tweet in data.tweets")
+          p {{tweet.text}}
+          p {{tweet.user.screen_name}}
+          p {{tweet.id_str}}  
+          p {{tweet.entities.hashtags[0].text}}
+          p {{tweet.entities.media[0].media_url}}
+
+          div
+            img(src='{{tweet.entities.media[0].media_url}}', style='border:1px solid black;max-width:100%;')
+
+            
