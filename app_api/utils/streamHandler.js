@@ -88,6 +88,7 @@ module.exports = function(){
     
     var emitStream = function(t_stream, t_nsp, room){
         t_stream.save(function(err) {
+            console.log('did save? '+err);
             if (!err) {
                 t_nsp.to(room).emit('tweet', t_stream.twid_str);
             }
