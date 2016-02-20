@@ -39,13 +39,9 @@ module.exports = function(){
                 tweetInLocation = containsLocationTrack(tweet.text, location.trackArray);
             }
             if(tweetInLocation){
-                console.log(_.isEmpty(t.retweeted_status));
                 tweetEntry.retweeted_status_id_str = _.isEmpty(t.retweeted_status) ? 0 : t.retweeted_status.id_str;
-                console.log(tweetEntry.retweeted_status_id_str);
 
-                console.log('trying to emit '+tweet.twid_str);
                 if(tweet.entities.media){
-                    console.log('we have media');
                     Tweet.count(
                         {
                             $or: [

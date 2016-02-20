@@ -15,15 +15,10 @@ module.exports = function(io){
             var streamH = new streamHandler();
             console.log('Someone connected');
             socket.on('join', function(room){
-                console.log('Pre-join');
                 if(_.isUndefined(nsp.adapter.rooms[room.newRoom])){
                     socket.leave(currentRoom[socket.id]);
                     socket.join(room.newRoom);
-                    console.log('req location: '+ room.locationid);
                     Loc.findById(room.locationid).exec(function(err, location){
-                        console.log('socketid: '+socket.id)
-                        console.log('location id: '+ location.id);
-                        console.log(location.hashtags_track + ',' + location.track);
                         var stream = twit.stream('statuses/filter', { track: location.hashtags_track +', ' + location.track, locations: location.geocode_rect});
                         streamH.createStream(stream, nsp, room.newRoom, location); 
                     });
@@ -32,7 +27,6 @@ module.exports = function(io){
                 else{
                     socket.leave(currentRoom[socket.id]);
                     socket.join(room.newRoom);
-                    console.log('Post-join');
                     console.log(nsp.adapter.rooms[room.newRoom]);
                 }
                 currentRoom[socket.id] = room.newRoom;
@@ -40,21 +34,16 @@ module.exports = function(io){
             });
 
             socket.on('leave', function(){
-                console.log('leaving room');
-                console.log('Pre-leave');
-                console.log(nsp.adapter.rooms[currentRoom[socket.id]]);
                 socket.leave(currentRoom[socket.id]);
-                console.log('Post-leave');
-                console.log(nsp.adapter.rooms[currentRoom[socket.id]]);
-                streamH.closeStream();
+                //streamH.closeStream();
             });
             
             socket.on('disconnect', function(){
                 console.log('disconnecting');
                 var r = currentRoom[socket.id];
                 socket.leave(currentRoom[socket.id]);
-                if(_.isUndefined(nsp.adapter.rooms[r]))
-                    streamH.closeStream();
+//                if(_.isUndefined(nsp.adapter.rooms[r]))
+//                    streamH.closeStream();
             });
 
         }); 
@@ -90,7 +79,6 @@ module.exports = function(io){
     };
     
     this.locationNewStreams = function(req, res){
-        console.log('we are in the right place');
         if(req.params && req.params.locationid){
             
             var limit = parseFloat(req.query.lim);
