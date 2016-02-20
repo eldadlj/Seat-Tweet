@@ -7,7 +7,7 @@
      function loadTweetsDelay(){
          setTimeout(function(){
             window.twttr.widgets.load();
-                }, 500);
+                }, 1000);
      }
     
     locationStreamsCtrl.$inject = ['$routeParams', 'locationsData', 'socket', '$scope' , '$document'];
