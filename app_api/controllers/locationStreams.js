@@ -18,6 +18,7 @@ module.exports = function(io){
                 if(_.isUndefined(nsp.adapter.rooms[room.newRoom])){
                     socket.leave(currentRoom[socket.id]);
                     socket.join(room.newRoom);
+                    console.log('new room: '+room.newRoom)
                     Loc.findById(room.locationid).exec(function(err, location){
                         var stream = twit.stream('statuses/filter', { track: location.hashtags_track +', ' + location.track, locations: location.geocode_rect});
                         streamH.createStream(stream, nsp, room.newRoom, location); 
@@ -42,8 +43,6 @@ module.exports = function(io){
                 console.log('disconnecting');
                 var r = currentRoom[socket.id];
                 socket.leave(currentRoom[socket.id]);
-//                if(_.isUndefined(nsp.adapter.rooms[r]))
-//                    streamH.closeStream();
             });
 
         }); 
