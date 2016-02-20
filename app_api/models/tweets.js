@@ -1,32 +1,24 @@
 var mongoose = require('mongoose');
 
 var tweetSchema = new mongoose.Schema({
-    active: Boolean,
     location_id: String,
-    metdata: Array,
     date: Date,
-    twid: Number,
     twid_str: String,
     text: String,
-    source: String,
-    truncated: Boolean,
-    in_reply_to_statud_id: Number,
-    in_reply_to_statud_id_str: String,
-    in_reply_to_user_id: Number,
-    in_reply_to_user_id_str: String,
     retweeted_status_id_str: String,
-    user: Array,
-    geo: Array,
+    hashtags: Array,
+    media_url: String,
+    link_url: String,
+    image_url: String,
+    user_name: String,
+    user_screen_name: String,
+    user_id_str: String,
     coordinates: Array,
-    place: Array,
-    contributors: Array,
+    place_name: String,
+    place_type: String,
     retweet_count: Number,
     favorite_count: Number,
-    entities: Array,
-    favorited: Boolean,
-    retweeted: Boolean,
     lang: String,
-    location: Array
 });
 
 //Create a static getTweet method to return tweet data from the db

@@ -7,33 +7,43 @@ module.exports = function(){
     this.createStream = function(stream, nsp, room, location){
         currentStream = stream;
         //in case that there are too many retweets use t.retweeted_status
+/*
+    place_name: String,
+    place_type: String,
+  */
         currentStream.on('tweet', function(t){            
             var tweetInLocation = false;
             var tweet = {
                 location_id: location.id,
-                twid: t['id'],
+                location_name: location.name,
                 twid_str: t['id_str'],
+                retweet_count: t['retweet_count'],
+                favorite_count: t['favorite_count'],
                 date: t['created_at'],
-                user: t['user'],
                 text: t['text'],
-                entities: t['entities'],
-                source: t['source'],
                 lang: t['lang'],
-                location: t['location'],
-                geo: t['geo'],
                 coordinates: t['coordinates'],
             };
             var tweetEntry = new Tweet(tweet);
+            tweetEntry.user_id_str = t.user.id_str;
+            tweetEntry.user_name = t.user.name;
+            tweetEntry.user_screen_name = t.user.screen_name;
             
             //We can also use location name in the future
-            if(tweet.geo != null){
+            if(!_.isEmpty(t.coordinates)){
                 var chunk = _.chunk(location.geocode_rect, 2);
-                if(insidePolygon(tweet.geo.coordinates, chunk)){
+                if(insidePolygon(t.coordinates, chunk)){
                     tweetInLocation = true;
                 }
             }
-            if(!_.isEmpty(tweet.entities.hashtags) && !tweetInLocation){
-                tweetInLocation = containsLocationHashtags(tweet.entities.hashtags, location.hashtags);
+                         
+            if(!_.isEmpty(t.place)){
+                tweetEntry.place_name = t.place.name;
+                tweetEntry.place_type = t.place.place_type;
+            }
+            if(!_.isEmpty(t.entities.hashtags) && !tweetInLocation){
+                tweetEntry.hashtags = t.entities.hashtags;
+                tweetInLocation = containsLocationHashtags(t.entities.hashtags, location.hashtags);
             }
             if(!tweetInLocation){
                 tweetInLocation = containsLocationTrack(tweet.text, location.trackArray);
@@ -41,32 +51,35 @@ module.exports = function(){
             if(tweetInLocation){
                 tweetEntry.retweeted_status_id_str = _.isEmpty(t.retweeted_status) ? 0 : t.retweeted_status.id_str;
 
-                if(tweet.entities.media){
+                if(t.entities.media){
                     Tweet.count(
                         {
                             $or: [
-                                {"twid_str": tweet.twid_str},
+                                {"twid_str": tweetEntry.twid_str},
                                 {"twid_str": tweetEntry.retweeted_status_id_str},
                                 {"retweeted_status_id_str": tweetEntry.retweeted_status_id_str},
-                                {"twid_str": tweet.entities.media[0].source_status_id_str}, 
-                                {"entities.media.source_status_id_str": tweet.entities.media[0].source_status_id_str}
+                                {"twid_str": t.entities.media[0].source_status_id_str}, 
+                                {"entities.media.source_status_id_str": t.entities.media[0].source_status_id_str}
                             ]}).limit(1).exec(
                         function(err, docCount){
                             console.log('Count With Media ' +docCount);
                             if(docCount < 1){
+                                tweetEntry.media_url = t.entities.media[0].media_url;
                                 emitStream(tweetEntry, nsp, room);
                             }
                         });
                 }
-                else if((tweet.entities.urls.display_url && tweet.entities.urls[0].display_url.startsWith('instagram.com')) || _.isEmpty(tweet.entities.urls)){
+                else if(_.isEmpty(t.entities.urls) || (!_.isEmpty(t.entities.urls[0].display_url) && _.startsWith(t.entities.urls[0].display_url, 'instagram.com'))){
+                    tweetEntry.image_url = (!_.isEmpty(t.entities.urls) && _.startsWith(t.entities.urls[0].display_url, 'instagram.com')) ? t.entities.urls[0].expanded_url : null;
                     Tweet.count(
                         { 
                             $or: [
-                                {"twid_str": tweet.twid_str},
+                                {"twid_str": tweetEntry.twid_str},
                                 {"twid_str": tweetEntry.retweeted_status_id_str},
                                 {"retweeted_status_id_str": tweetEntry.retweeted_status_id_str}
                                 ]},
                         function(err, docCount){
+                            console.log('instagram? '+ tweetEntry.image_url)
                             console.log('Count ' +docCount);
                             if(docCount < 1){
                                 emitStream(tweetEntry, nsp, room);

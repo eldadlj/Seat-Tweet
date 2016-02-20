@@ -28,12 +28,10 @@
                 data.forEach(function(element, index){
                     element.containsInstagram = false;
                     element.date = new Date(element.date);
-                    if(element.entities[0].urls.length > 0){
-                        if(element.entities[0].urls[0].display_url.startsWith('instagram.com')){
-                            element.instagram = element.entities[0].urls[0].expanded_url+'media/?size=m';
+                        if(element.image_url){
+                            element.instagram = element.image_url+'media/?size=m';
                             element.containsInstagram = true;
-                        }   
-                    }
+                        }  
                     streams.push(element);
                 });
                 socket.on('tweet', function(t){
@@ -61,12 +59,10 @@
                 data.forEach(function(element, index){
                     element.date = new Date(element.date);
                     element.containsInstagram = false;
-                    if(element.entities[0].urls.length > 0){
-                        if(element.entities[0].urls[0].display_url.startsWith('instagram.com')){
-                            element.instagram = element.entities[0].urls[0].expanded_url+'media/?size=m';
+                    if(element.image_url){
+                            element.instagram = element.image_url+'media/?size=m';
                             element.containsInstagram = true;
-                        }   
-                    }
+                        }
                     streams.push(element);
                 });
                 vm.data = { tweets: streams };

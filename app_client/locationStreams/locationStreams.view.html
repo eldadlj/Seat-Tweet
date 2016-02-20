@@ -12,8 +12,6 @@
         <div class="col-xs-8 col-md-8">
             <div class="row list-group">
                 <div class="stream col-xs-8 list-group-item" ng-repeat="tweet in vm.data.tweets | orderBy: '-date'">
-                    <p>
-                    {{tweet.twid_str}}</p>
                     <div class="instagrmDiv" ng-show="{{tweet.containsInstagram}}">
                         <img class="instagramImg" src="{{tweet.instagram}}">
                     </div>
