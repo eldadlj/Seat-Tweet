@@ -10,6 +10,7 @@ var fs = require('fs');
 
 var app = express();
 app.io = require('socket.io')();
+console.log('in app.js;');
 
 //var routes = require('./app_server/routes/index')(app.io);
 var routesApi = require('./app_api/routes/index')(app.io);

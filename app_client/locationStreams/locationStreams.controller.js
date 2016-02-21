@@ -17,6 +17,10 @@
         vm.newTweetsCount = 0;
         vm.totalStreamsLoaded = 0;
         vm.locationid = $routeParams.locationid;
+        vm.pageHeader = {
+            title: 'Room is : ' + vm.locationid,
+            strapline: 'StrapLine is ' +vm.locationid
+        }
         socket.init();
         socket.emit('join', {
             newRoom: vm.locationid,

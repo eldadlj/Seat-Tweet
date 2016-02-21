@@ -6,10 +6,10 @@
         <div class="col-md-2">
             <left-navigation></left-navigation>
         </div>
-        <div>
-            <button ng-show="vm.newTweetsCount > 0" ng-click="loadNewStreams()">New Streams Count: {{vm.newTweetsCount}}</button>
-        </div>
         <div class="col-xs-8 col-md-8">
+            <div>
+                <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="vm.newTweetsCount > 0" ng-click="loadNewStreams()">New Streams Count: {{vm.newTweetsCount}}</button>
+            </div>
             <div class="row list-group">
                 <div class="stream col-xs-8 list-group-item" ng-repeat="tweet in vm.data.tweets | orderBy: '-date'">
                     <div class="instagrmDiv" ng-show="{{tweet.containsInstagram}}">

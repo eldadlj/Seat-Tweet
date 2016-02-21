@@ -6,16 +6,14 @@ module.exports = function(){
 
     this.createStream = function(stream, nsp, room, location){
         currentStream = stream;
-        //in case that there are too many retweets use t.retweeted_status
-/*
-    place_name: String,
-    place_type: String,
-  */
-        currentStream.on('tweet', function(t){            
+        
+        console.log('created stream for ' + room);
+        currentStream.on('tweet', function(t){
+            currentlocation = location;
+            currentRoom = room;
+            console.log('we have t for ' + currentlocation.name);
             var tweetInLocation = false;
             var tweet = {
-                location_id: location.id,
-                location_name: location.name,
                 twid_str: t['id_str'],
                 retweet_count: t['retweet_count'],
                 favorite_count: t['favorite_count'],
@@ -25,6 +23,8 @@ module.exports = function(){
                 coordinates: t['coordinates'],
             };
             var tweetEntry = new Tweet(tweet);
+            tweetEntry.location_id =currentlocation.id;
+            tweetEntry.location_name = currentlocation.name;
             tweetEntry.user_id_str = t.user.id_str;
             tweetEntry.user_name = t.user.name;
             tweetEntry.user_screen_name = t.user.screen_name;
@@ -62,7 +62,7 @@ module.exports = function(){
                                 {"entities.media.source_status_id_str": t.entities.media[0].source_status_id_str}
                             ]}).limit(1).exec(
                         function(err, docCount){
-                            console.log('Count With Media ' +docCount);
+                            console.log('location: ' + tweetEntry.location_name + ' Room ' + currentRoom +' Count With Media ' +docCount);
                             if(docCount < 1){
                                 tweetEntry.media_url = t.entities.media[0].media_url;
                                 emitStream(tweetEntry, nsp, room);
@@ -80,9 +80,9 @@ module.exports = function(){
                                 ]},
                         function(err, docCount){
                             console.log('instagram? '+ tweetEntry.image_url)
-                            console.log('Count ' +docCount);
+                            console.log('location: ' + tweetEntry.location_name + ' Room ' + currentRoom + ' Count ' +docCount);
                             if(docCount < 1){
-                                emitStream(tweetEntry, nsp, room);
+                                emitStream(tweetEntry, nsp, currentRoom);
                             }
                         });
                 }
@@ -95,11 +95,12 @@ module.exports = function(){
             currentStream.stop();
     };
     
-    var emitStream = function(t_stream, t_nsp, room){
+    var emitStream = function(t_stream, t_nsp, t_room){
         t_stream.save(function(err) {
             console.log('did save? '+err);
             if (!err) {
-                t_nsp.to(room).emit('tweet', t_stream.twid_str);
+                console.log('location ' +t_stream.location_name + ' room is ' +t_room);
+                t_nsp.to(currentRoom).emit('tweet', t_stream.twid_str);
             }
         });
     }
