@@ -1,16 +1,19 @@
 var express = require('express');
+var session = require('express-session')
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-require('./app_api/models/db');
 var uglifyJs = require('uglify-js');
 var fs = require('fs');
+var passport = require('passport');
 
+require('./app_api/models/db');
+require('./app_api/config/passport');
 var app = express();
 app.io = require('socket.io')();
-console.log('in app.js;');
+//var nsp = io.of('/seattweet');
 
 //var routes = require('./app_server/routes/index')(app.io);
 var routesApi = require('./app_api/routes/index')(app.io);
@@ -57,6 +60,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
+app.use(session({secret:'very secret', maxAge: 360*5 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 //app.use('/', routes);

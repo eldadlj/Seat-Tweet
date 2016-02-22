@@ -8,6 +8,7 @@ module.exports = function(){
         currentStream = stream;
         
         console.log('created stream for ' + room);
+        //Need to flag from location streams and present in a different div in ui
         currentStream.on('tweet', function(t){
             currentlocation = location;
             currentRoom = room;

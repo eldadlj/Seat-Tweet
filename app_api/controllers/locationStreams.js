@@ -8,14 +8,18 @@ module.exports = function(io){
     var Tweet = mongoose.model('Tweet');
     var tweets = [];
     var currentRoom = [];
-    
-    var twit = new Twit(config); 
+    var currentConfig = config;
+     
         var nsp = io.of('/seattweet');
         nsp.on('connection', function(socket){
+            var twit = new Twit(currentConfig);
             var streamH = new streamHandler();
+            
             console.log('Someone connected');
             socket.on('join', function(room){
+                console.log(currentConfig);
                 if(_.isUndefined(nsp.adapter.rooms[room.newRoom])){
+                    
                     socket.leave(currentRoom[socket.id]);
                     socket.join(room.newRoom);
                     console.log('new room: '+room.newRoom)
@@ -36,19 +40,25 @@ module.exports = function(io){
 
             socket.on('leave', function(){
                 socket.leave(currentRoom[socket.id]);
-                //streamH.closeStream();
             });
             
             socket.on('disconnect', function(){
                 console.log('disconnecting');
                 var r = currentRoom[socket.id];
                 socket.leave(currentRoom[socket.id]);
+                //temp close stream until we have enough access tokens
+                streamH.closeStream();
             });
 
         }); 
     
     //this is getting called on initial page load for a location
     this.locationStreams = function(req, res){
+        if(req.user.length > 0){
+            currentConfig.access_token = req.user[0].twitter.token;
+            currentConfig.access_token_secret = req.user[0].twitter.tokenSecret;
+            console.log(currentConfig);
+        }
         if(req.query.lim){
             if(req.params && req.params.locationid){
                 var limit = parseInt(req.query.lim);

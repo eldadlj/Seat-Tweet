@@ -20,7 +20,7 @@ var locationSchema = new mongoose.Schema({
     },
     path: String,
     hashtags: Array,
-    hashtags_track: String,
+    hashtags_track: String, 
     track: String,
     trackArray: Array
 });
