@@ -20,7 +20,7 @@ var config = require('../../config');
 passport.use(new TwitterStrategy({
     consumerKey: config.consumer_key,
     consumerSecret: config.consumer_secret,
-    callbackURL: 'http://127.0.0.1:3000/api/login_cb'
+    callbackURL: config.callbackURL
   },
   function(token, tokenSecret, user, done) {
     // In this example, the user's Twitter profile is supplied as the user
