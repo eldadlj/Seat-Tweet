@@ -47,7 +47,7 @@ module.exports = function(io){
                 var r = currentRoom[socket.id];
                 socket.leave(currentRoom[socket.id]);
                 //temp close stream until we have enough access tokens
-                streamH.closeStream();
+                //streamH.closeStream();
             });
 
         }); 
