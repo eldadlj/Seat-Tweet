@@ -4,5 +4,5 @@ module.exports.about = function(req, res, next){
 };
 
 module.exports.angularApp = function(req, res){
-    res.render('layout', {title: 'Seat-Tweet'});
+    res.render('layout', {title: 'BLEACHEERZ'});
 };

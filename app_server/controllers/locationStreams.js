@@ -12,7 +12,7 @@ module.exports = function(){
         res.render('location-stream', { 
             title: 'Location Streams',
             pageHeader: {
-            title: 'Seat-Tweet',
+            title: 'BLEACHEERZ',
             strapLine: 'Find the best tweets!'
         },
         });

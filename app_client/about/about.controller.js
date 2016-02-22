@@ -7,7 +7,7 @@
         var vm = this;
         
         vm.pageHeader = {
-          title: 'About Seat-Tweet'  
+          title: 'About BLEACHEERZ'  
         };
         
         vm.main = {

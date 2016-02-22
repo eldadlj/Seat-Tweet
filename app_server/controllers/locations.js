@@ -27,9 +27,9 @@ var _showError = function(req, res, status){
 
 var renderHomePage = function(req, res){
     res.render('locations-list', { 
-        title: 'Seat-Tweet - Find the best tweets!',
+        title: 'BLEACHEERZ - Find the best tweets!',
         pageHeader: {
-            title: 'Seat-Tweet',
+            title: 'BLEACHEERZ',
             strapLine: 'Find the best tweets!'
         },
         sports: [{
