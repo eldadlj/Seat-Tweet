@@ -28,11 +28,6 @@ passport.use(new TwitterStrategy({
     // be associated with a user record in the application's database, which
     // allows for account linking and authentication with other identity
     // providers.
-    console.log(token + ' ' +tokenSecret);
-    //console.log(user);
-    //config.access_token = token;
-    //config.access_token_secret = tokenSecret;
-    //console.log(config.access_token + ' ' +config.access_token_secret);
     User.find({"twitter.id_str" : user.id}, function(err, db_user) {
         console.log(err);
         if(db_user.length < 1){

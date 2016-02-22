@@ -54,10 +54,9 @@ module.exports = function(io){
     
     //this is getting called on initial page load for a location
     this.locationStreams = function(req, res){
-        if(req.user.length > 0){
+        if(req.user && req.user.length > 0){
             currentConfig.access_token = req.user[0].twitter.token;
             currentConfig.access_token_secret = req.user[0].twitter.tokenSecret;
-            console.log(currentConfig);
         }
         if(req.query.lim){
             if(req.params && req.params.locationid){
