@@ -13,7 +13,10 @@ var config = require('../../config');
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
+        console.log('trying to desrialize user');
         User.find({"twitter.id_str" : id}, function(err, user) {
+            console.log(err);
+            console.log(user);
             done(err, user);
         });
     });

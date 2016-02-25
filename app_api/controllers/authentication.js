@@ -8,6 +8,7 @@ var sendJSONresponse = function(res, status, content) {
 };
 
 module.exports.login = function(req, res) {
+    console.log('twitter login');
     passport.authenticate('twitter');
 };
 
