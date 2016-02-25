@@ -44,7 +44,7 @@ var appClientFiles = [
 
 var uglified = uglifyJs.minify(appClientFiles, {compress: false});
 
-fs.writeFile('./public/angular/seattweet.min.js', uglified.code, function(err){
+fs.writeFile('public/angular/seattweet.min.js', uglified.code, function(err){
     if(err){
         console.log(err);
     }else{
@@ -60,7 +60,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
-app.use(session({secret:'very secret'}));
+app.use(session({secret:'newSecretMEssageSeatTweet'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
