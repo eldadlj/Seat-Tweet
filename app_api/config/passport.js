@@ -38,7 +38,7 @@ passport.use(new TwitterStrategy({
         console.log(db_user);
         console.log(err);
         if(db_user.length < 1){
-            console.log('Could not found user');
+            console.log('Could not find user');
             var u = {
                 twitter : {
                     id_str : user.id,
@@ -60,7 +60,7 @@ passport.use(new TwitterStrategy({
                     var newToken = new Token(t);
                     newToken.save(function(err){
                         if(err){
-                            console.log('token could not saved');
+                            console.log('token could not be saved');
                         }
                     })
                     console.log('user saved successfuly');
