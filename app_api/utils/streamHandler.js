@@ -12,7 +12,7 @@ module.exports = function(){
         currentStream.on('tweet', function(t){
             currentlocation = location;
             currentRoom = room;
-            console.log('we have t for ' + currentlocation.name);
+            //console.log('we have t for ' + currentlocation.name);
             var tweetInLocation = false;
             var tweet = {
                 twid_str: t['id_str'],
@@ -22,6 +22,7 @@ module.exports = function(){
                 text: t['text'],
                 lang: t['lang'],
                 coordinates: t['coordinates'],
+                tweeted_from_location: false
             };
             var tweetEntry = new Tweet(tweet);
             tweetEntry.location_id =currentlocation.id;
@@ -34,7 +35,9 @@ module.exports = function(){
             if(!_.isEmpty(t.coordinates)){
                 var chunk = _.chunk(location.geocode_rect, 2);
                 if(insidePolygon(t.coordinates, chunk)){
-                    tweetInLocation = true;
+                    console.log('we have tweet from location');
+                    tweetEntry.tweeted_from_location = tweetInLocation = true;
+                    
                 }
             }
                          

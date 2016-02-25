@@ -6,6 +6,7 @@ var tweetSchema = new mongoose.Schema({
     twid_str: String,
     text: String,
     retweeted_status_id_str: String,
+    tweeted_from_location: Boolean,
     hashtags: Array,
     media_url: String,
     link_url: String,

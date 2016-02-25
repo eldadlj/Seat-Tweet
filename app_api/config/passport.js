@@ -2,6 +2,7 @@ var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Token = mongoose.model('Token');
 var config = require('../../config');
 
 // used to serialize the user for the session
@@ -43,9 +44,48 @@ passport.use(new TwitterStrategy({
             var newUser =  new User(u);
             newUser.save(function(err) {
                 if (!err) {
+                    var t = {
+                        active: false,
+                        user_id: user.id,
+                        token: token,
+                        tokenSecret: tokenSecret
+                    };
+                    var newToken = new Token(t);
+                    newToken.save(function(err){
+                        if(err){
+                            console.log('token could not saved');
+                        }
+                    })
                     console.log('user saved successfuly');
                 }
             });
+        }
+        else{
+            var updatedData;
+            if(token.length > 0 && tokenSecret.length > 0){
+                updatedData = {
+                    token: token,
+                    tokenSecret: tokenSecret 
+                };
+            }
+            else if(token.length > 0 && tokenSecret.length < 1){
+                updatedData = {
+                    token: token
+                };
+            }
+            else if(token.length < 1 && tokenSecret.length > 0){
+                updatedData = {
+                    tokenSecret: tokenSecret
+                };
+            }
+            if(updatedData){
+                User.update({id_str: user.id},updatedData, function(err,affected) {
+                  console.log('affected User rows %d', affected);
+                });
+                Token.update({user_id: user.id},updatedData, function(err,affected) {
+                  console.log('affected Token rows %d', affected);
+                });
+            }
         }
     });
     return done(null, user);
