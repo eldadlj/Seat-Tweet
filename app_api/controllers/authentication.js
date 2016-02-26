@@ -13,5 +13,15 @@ module.exports.login = function(req, res) {
 };
 
 module.exports.loging_cb = function(req, res){
-    console.log('success :' +req,user);
+    console.log('success :' +req.user);
+}
+
+module.exports.successLogin = function(req, res){
+    console.log('success :');
+    console.log(req);
+}
+
+module.exports.failLogin = function(req, res){
+    console.log('failure :');
+    console.log(req);
 }

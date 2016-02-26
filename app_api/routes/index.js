@@ -19,9 +19,11 @@ module.exports = function(io){
     router.get('/location-stream/:locationid', stream.locationStreams);
     router.get('/login', passport.authenticate('twitter'));
     router.get('/login_cb', passport.authenticate('twitter', {
-            successRedirect : '/profile',
-            failureRedirect : '/'
+            successRedirect : '/successLogin',
+            failureRedirect : '/failLogin'
         }));
+    router.get('/successLogin', ctrlAuth.successLogin);
+    router.get('/failLogin', ctrlAuth.failLogin);
 
     return router;
 }
