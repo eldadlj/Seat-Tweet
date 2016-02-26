@@ -60,7 +60,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
-app.use(session({secret:'newSecretMEssageSeatTweet'}));
+app.use(session({secret:'newSecretMEssageSeatTweet', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
