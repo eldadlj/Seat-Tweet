@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Token = mongoose.model('Token');
 var config = require('../../config');
+console.log('we are in Passport');
 
 // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
