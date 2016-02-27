@@ -28,6 +28,7 @@ passport.use(new TwitterStrategy({
     callbackURL: config.callbackURL
   },
   function(token, tokenSecret, profile, done) {
+    process.nextTick(function () {
     console.log('using passport!!!!!!!!!!!!!!!!!!');
     User.find({"twitter.id_str" : profile.id}, function(err, db_user) {
         console.log('db_user is');
@@ -90,6 +91,7 @@ passport.use(new TwitterStrategy({
                 });
             }
         }
+    });
     });
     console.log('at the end..........');
     return done(null, profile);
