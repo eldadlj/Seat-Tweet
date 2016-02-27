@@ -29,11 +29,7 @@ passport.use(new TwitterStrategy({
   },
   function(token, tokenSecret, user, done) {
     console.log('using passport!!!!!!!!!!!!!!!!!!');
-    // In this example, the user's Twitter profile is supplied as the user
-    // record.  In a production-quality application, the Twitter profile should
-    // be associated with a user record in the application's database, which
-    // allows for account linking and authentication with other identity
-    // providers.
+    process.nextTick(function(){
     User.find({"twitter.id_str" : user.id}, function(err, db_user) {
         console.log('db_user is');
         console.log(db_user);
@@ -98,4 +94,5 @@ passport.use(new TwitterStrategy({
     });
     console.log('at the end..........');
     return done(null, user);
+});
   }));
