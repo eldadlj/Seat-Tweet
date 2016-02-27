@@ -27,10 +27,9 @@ passport.use(new TwitterStrategy({
     consumerSecret: config.consumer_secret,
     callbackURL: config.callbackURL
   },
-  function(token, tokenSecret, user, done) {
+  function(token, tokenSecret, profile, done) {
     console.log('using passport!!!!!!!!!!!!!!!!!!');
-    process.nextTick(function(){
-    User.find({"twitter.id_str" : user.id}, function(err, db_user) {
+    User.find({"twitter.id_str" : profile.id}, function(err, db_user) {
         console.log('db_user is');
         console.log(db_user);
         console.log(err);
@@ -38,11 +37,11 @@ passport.use(new TwitterStrategy({
             console.log('Could not find user');
             var u = {
                 twitter : {
-                    id_str : user.id,
+                    id_str : profile.id,
                     token : token,
                     tokenSecret : tokenSecret,
-                    displayName  : user.displayName,
-                    username     : user.username
+                    displayName  : profile.displayName,
+                    username     : profile.username
                 }
             };
             var newUser =  new User(u);
@@ -50,7 +49,7 @@ passport.use(new TwitterStrategy({
                 if (!err) {
                     var t = {
                         active: false,
-                        user_id: user.id,
+                        user_id: profile.id,
                         token: token,
                         tokenSecret: tokenSecret
                     };
@@ -83,16 +82,15 @@ passport.use(new TwitterStrategy({
                 };
             }
             if(updatedData){
-                User.update({id_str: user.id},updatedData, function(err,affected) {
+                User.update({id_str: profile.id},updatedData, function(err,affected) {
                   console.log('affected User rows %d', affected);
                 });
-                Token.update({user_id: user.id},updatedData, function(err,affected) {
+                Token.update({user_id: profile.id},updatedData, function(err,affected) {
                   console.log('affected Token rows %d', affected);
                 });
             }
         }
     });
     console.log('at the end..........');
-    return done(null, user);
-});
+    return done(null, profile);
   }));
