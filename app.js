@@ -1,9 +1,11 @@
 var express = require('express');
-var session = require('express-session')
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var MongoStore = require('connect-mongo/es5')(session);
+var mongoose = require('mongoose');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var uglifyJs = require('uglify-js');
 var fs = require('fs');
@@ -58,9 +60,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+    secret: 'somesecret',
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    resave: false,
+    saveUninitialized: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
-app.use(session({secret:'newSecretMEssageSeatTweet', resave: true, saveUninitialized: true}));
+//app.use(session({secret:'newSecretMEssageSeatTweet', resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
