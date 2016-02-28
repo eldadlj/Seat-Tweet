@@ -58,7 +58,7 @@
         $scope.loadNewStreams= function(){
             var limit = vm.newTweetsCount;
             vm.newTweetsCount = 0;
-            locationsData.locationNewStreamsById(vm.locationid, limit)
+            locationsData.locationNewStreamsById(vm.locationid, limit, 0)
             .success(function(data){
                 data.forEach(function(element, index){
                     element.date = new Date(element.date);
@@ -71,7 +71,6 @@
                 });
                 vm.data = { tweets: streams };
                 vm.totalStreamsLoaded = vm.data.tweets.length;
-            //alert(vm.totalStreamsLoaded);
                 loadTweetsDelay();
             })
             .error(function(e){
@@ -88,5 +87,29 @@
         $scope.$on("$destroy", function(){
             socket.emit('leave');
         });
+        
+        $scope.loadOlderStreams = function(){
+            var limit = 20;
+            var skip = vm.newTweetsCount + vm.totalStreamsLoaded;
+            console.log(skip);
+            locationsData.locationNewStreamsById(vm.locationid, limit, skip)
+            .success(function(data){
+                data.forEach(function(element, index){
+                    element.date = new Date(element.date);
+                    element.containsInstagram = false;
+                    if(element.image_url){
+                            element.instagram = element.image_url+'media/?size=m';
+                            element.containsInstagram = true;
+                        }
+                    streams.push(element);
+                });
+                vm.data = { tweets: streams };
+                vm.totalStreamsLoaded = vm.data.tweets.length;
+                loadTweetsDelay();
+            })
+            .error(function(e){
+                console.log(e);
+            });
+        }
     }
 })();

@@ -55,21 +55,17 @@ module.exports = function(io){
     
     //this is getting called on initial page load for a location
     this.locationStreams = function(req, res){
-        /*if(req.user && req.user.length > 0){
-            currentConfig.access_token = req.user[0].twitter.token;
-            currentConfig.access_token_secret = req.user[0].twitter.tokenSecret;
-        }*/
         if(req.query.lim){
             if(req.params && req.params.locationid){
                 var limit = parseInt(req.query.lim);
-                Tweet.getTweets(0, 0, limit, req.params.locationid, function(tweets){
+                var skip = req.query.skip ? parseInt(req.query.skip) : 0;
+                console.log(skip);
+                Tweet.getTweets(0, skip, limit, req.params.locationid, function(tweets){
                     console.log(tweets.length);
                     sendJsonResponse(res, 200, tweets); 
                 });
             }
         }else{
-        
-        
         if(req.params && req.params.locationid){ 
             //Now return to page data from db
             Tweet.getTweets(0,0,0, req.params.locationid, function(tweets){

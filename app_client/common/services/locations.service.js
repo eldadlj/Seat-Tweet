@@ -13,8 +13,8 @@
             return $http.get('/api/location-stream/'+locationId);
         };
         
-        var locationNewStreamsById = function(locationId, limit){
-            return $http.get('/api/location-stream/'+locationId+'?lim='+limit);
+        var locationNewStreamsById = function(locationId, limit, skip){
+            return $http.get('/api/location-stream/'+locationId+'?lim='+limit+'&skip='+skip);
         };
         
         var sportsForLocation = function(){

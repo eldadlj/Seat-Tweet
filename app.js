@@ -41,6 +41,7 @@ var appClientFiles = [
     'app_client/common/directives/leftNavigation/leftNavigation.directive.js',
     'app_client/common/directives/rightNavigation/rightNavigation.directive.js',
     'app_client/common/directives/pageHeader/pageHeader.directive.js',
+    'app_client/common/directives/WindowEvents/windowScroll.directive.js',
     'app_client/common/filters/addHtmlLineBreaks.filter.js'
 ];
 
