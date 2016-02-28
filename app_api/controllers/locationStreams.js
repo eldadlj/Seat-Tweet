@@ -18,14 +18,12 @@ module.exports = function(io){
             
             console.log('Someone connected');
             socket.on('join', function(room){
-                //console.log(currentConfig);
                 if(_.isUndefined(nsp.adapter.rooms[room.newRoom])){
                     checkLastStreamUsingToken(socket, room);
                 }
                 else{
                     socket.leave(currentRoom[socket.id]);
                     socket.join(room.newRoom);
-                    console.log(nsp.adapter.rooms[room.newRoom]);
                 }
                 currentRoom[socket.id] = room.newRoom;
                 
@@ -33,7 +31,6 @@ module.exports = function(io){
 
             socket.on('leave', function(){
                 var r = currentRoom[socket.id];
-                console.log(r);
                 socket.leave(currentRoom[socket.id]);
                 if(_.isUndefined(nsp.adapter.rooms[r])){
                     checkShouldResetToken(r);
@@ -43,7 +40,6 @@ module.exports = function(io){
             socket.on('disconnect', function(){
                 console.log('disconnecting');
                 var r = currentRoom[socket.id];
-                console.log(r);
                 socket.leave(currentRoom[socket.id]);
                 if(_.isUndefined(nsp.adapter.rooms[r])){
                     checkShouldResetToken(r);
@@ -111,8 +107,6 @@ module.exports = function(io){
                  console.log(err);
              }
              else{
-                 console.log('availToken');
-                 console.log(availToken);
                  streamData(availToken, room, socket)
              }
          });
@@ -136,10 +130,7 @@ module.exports = function(io){
                 'locations.primary' : locationId
                 }
             }
-        console.log('updatedData');
-        console.log(updatedData);
         Token.update({token: token},updatedData, function(err,affected) {
-                  console.log('affected Token rows %d', affected);
                 });
     };
     
@@ -149,11 +140,8 @@ module.exports = function(io){
             currentConfig.access_token = token.token;
             currentConfig.access_token_secret = token.tokenSecret;
         }
-        console.log('currentConfig');
-        console.log(currentConfig);
         c_socket.leave(currentRoom[c_socket.id]);
         c_socket.join(room.newRoom);
-        console.log('new room: '+room.newRoom)
         var twit = new Twit(currentConfig);
         Loc.findById(room.locationid).exec(function(err, location){
             var streamH = new streamHandler();
@@ -167,7 +155,6 @@ module.exports = function(io){
     };
     
     var checkLastStreamUsingToken = function(socket, room){
-        console.log(room.locationid);
         Token.findOne({
              $or: [
                  { "locations.primary" :{$eq: room.locationid}},
@@ -178,9 +165,6 @@ module.exports = function(io){
                  console.log(err);
              }
              else if(tokenForLoc){
-                 console.log('tokenForloc is');
-                 console.log(tokenForLoc);
-
                  var updatedData;
                  var isActive = (_.isUndefined(tokenForLoc.locations.primary) && _.isUndefined(tokenForLoc.locations.secondary));
                  tokenForLoc.active = isActive;
@@ -208,8 +192,6 @@ module.exports = function(io){
                  console.log(err);
              }
              else if(tokenForLoc){
-                 console.log('tokenForloc is');
-                 console.log(tokenForLoc);
 
                  var updatedData;
                  var isActive = (_.isUndefined(tokenForLoc.locations.primary) && _.isUndefined(tokenForLoc.locations.secondary));
