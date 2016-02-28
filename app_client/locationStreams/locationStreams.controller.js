@@ -6,7 +6,10 @@
 
      function loadTweetsDelay(){
          setTimeout(function(){
-            window.twttr.widgets.load();
+             window.twttr.ready(function(twttr){
+                 console.log(twttr);
+            twttr.widgets.load();
+                 });
                 }, 1000);
      }
     
