@@ -2,23 +2,6 @@
     angular
         .module('seattweetApp')
         .controller('locationStreamsCtrl', locationStreamsCtrl);
-    //this is required to get the twitter widget because of angular related twitter bug
-
-    window.twttr = (function (d,s,id) {
-        var t, js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
-        js.src="https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
-        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
-        }(document, "script", "twitter-wjs"));
-    
-     function loadTweetsDelay(){
-         setTimeout(function(){
-             window.twttr.ready(function(twttr){
-                 console.log(twttr);
-            twttr.widgets.load();
-                 });
-                }, 1000);
-     }
     
     locationStreamsCtrl.$inject = ['$routeParams', 'locationsData', 'socket', '$scope' , '$document'];
     function locationStreamsCtrl($routeParams, locationsData, socket, $scope, $document){
@@ -58,6 +41,8 @@
                 };
             vm.data = { tweets: streams };
             vm.totalStreamsLoaded = vm.data.tweets.length;
+            console.log('locationStreamsById');
+            loadTweetsDelay();
             //window.onload();
             
         })
@@ -81,6 +66,7 @@
                 });
                 vm.data = { tweets: streams };
                 vm.totalStreamsLoaded = vm.data.tweets.length;
+                console.log('loadNewStreams');
                 loadTweetsDelay();
             })
             .error(function(e){
@@ -89,9 +75,10 @@
         }
         
         //TODO: Need to figure out the twitter load problem with angular
-        $document.ready(function() {
+        /*$document.ready(function() {
+            console.log('$document.ready');
             loadTweetsDelay();
-        });
+        });*/
         
         
         $scope.$on("$destroy", function(){
@@ -122,4 +109,22 @@
             });
         }
     }
+    //this is required to get the twitter widget because of angular related twitter bug
+
+    window.twttr = (function (d,s,id) {
+        var t, js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
+        js.src="https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
+        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+        }(document, "script", "twitter-wjs"));
+    
+     function loadTweetsDelay(){
+         console.log('here')
+         setTimeout(function(){
+             window.twttr.ready(function(twttr){
+                 console.log(twttr);
+            twttr.widgets.load();
+                 });
+                }, 1000);
+     }
 })();
