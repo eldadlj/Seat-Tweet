@@ -7,14 +7,6 @@
         <link rel="styleshet" href="/stylesheets/style.css">
     </head>
     <body ng-view>
-        <script>
-        window.twttr = (function (d,s,id) {
-        var t, js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
-        js.src="https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
-        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
-        }(document, "script", "twitter-wjs"));
-        </script>
         <script src="/Angular/angular.min.js"></script>
         <script src="/Angular-UI/ui-bootstrap-tpls-1.1.2.min.js"></script>
         <script src="/lib/angular-route.min.js"></script>
