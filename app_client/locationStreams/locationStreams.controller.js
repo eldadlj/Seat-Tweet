@@ -3,8 +3,8 @@
         .module('seattweetApp')
         .controller('locationStreamsCtrl', locationStreamsCtrl);
     
-    locationStreamsCtrl.$inject = ['$routeParams', 'locationsData', 'socket', '$scope' , '$document'];
-    function locationStreamsCtrl($routeParams, locationsData, socket, $scope, $document){
+    locationStreamsCtrl.$inject = ['$routeParams', 'locationsData', 'socket', '$scope' , '$document', '$timeout'];
+    function locationStreamsCtrl($routeParams, locationsData, socket, $scope, $document, $timeout){
         var vm = this;
         var streams = [];
         vm.newTweetsCount = 0;
@@ -42,7 +42,7 @@
             vm.data = { tweets: streams };
             vm.totalStreamsLoaded = vm.data.tweets.length;
             console.log('locationStreamsById');
-            loadTweetsDelay();
+            $timeout(loadTweetsDelay(), 0);
             //window.onload();
             
         })
@@ -67,7 +67,7 @@
                 vm.data = { tweets: streams };
                 vm.totalStreamsLoaded = vm.data.tweets.length;
                 console.log('loadNewStreams');
-                loadTweetsDelay();
+                $timeout(loadTweetsDelay(), 0);
             })
             .error(function(e){
                 console.log(e);
