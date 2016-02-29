@@ -112,6 +112,8 @@
     //this is required to get the twitter widget because of angular related twitter bug
 
     window.twttr = (function (d,s,id) {
+        setTimeout(function(){}, 500);
+        
         var t, js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return; js=d.createElement(s); js.id=id;
         js.src="https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs);
