@@ -121,6 +121,7 @@
         if (d.getElementById(id)) 
             return; 
         js=d.createElement(s); 
+        console.log(js);
         js.id=id;
         console.log(fjs);
         js.src="https://platform.twitter.com/widgets.js"; 
