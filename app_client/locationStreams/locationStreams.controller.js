@@ -127,9 +127,10 @@
         js.src="https://platform.twitter.com/widgets.js"; 
         console.log(js);
         console.log(fjs);
-        
-        fjs.parentNode.insertBefore(js, fjs);
         console.log(t);
+        debugger;
+        fjs.parentNode.insertBefore(js, fjs);
+        
         return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
         }(document, "script", "twitter-wjs"));
     
