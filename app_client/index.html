@@ -7,6 +7,25 @@
         <link rel="styleshet" href="/stylesheets/style.css">
     </head>
     <body ng-view>
+        <script>
+         window.twttr = (function (d,s,id) {
+        console.log('here in window.twttr');
+        console.log(d);
+        console.log(s);
+        console.log(id);
+        
+        var t, js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) 
+            return; 
+        js=d.createElement(s); 
+        console.log(js);
+        js.id=id;
+        console.log(fjs);
+        js.src="https://platform.twitter.com/widgets.js"; 
+        fjs.parentNode.insertBefore(js, fjs);
+        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
+        }(document, "script", "twitter-wjs"));
+        </script>
         <script src="/Angular/angular.min.js"></script>
         <script src="/Angular-UI/ui-bootstrap-tpls-1.1.2.min.js"></script>
         <script src="/lib/angular-route.min.js"></script>
@@ -17,5 +36,6 @@
         <script src="/javascripts/jquery-2.1.4.min.js"></script>
         <script src="/bootstrap/js/bootstrap.min.js"></script>
         <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
+<!--        <script src="https://platform.twitter.com/widgets.js"></script>-->
     </body>
 </html>
