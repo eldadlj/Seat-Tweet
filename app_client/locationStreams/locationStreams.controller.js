@@ -129,6 +129,7 @@
         console.log(fjs);
         
         fjs.parentNode.insertBefore(js, fjs);
+        console.log(t);
         return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
         }(document, "script", "twitter-wjs"));
     
@@ -136,8 +137,7 @@
     
     
      function loadTweetsDelay(){
-         window.twttr.load();
-         console.log('here')
+        console.log('here')
          setTimeout(function(){
              window.twttr.ready(function(twttr){
                  console.log(twttr);
