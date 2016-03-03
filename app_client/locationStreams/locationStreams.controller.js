@@ -124,7 +124,8 @@
         console.log(js);
         js.id=id;
         console.log(fjs);
-        js.src="https://platform.twitter.com/widgets.js"; 
+        //js.src="https://platform.twitter.com/widgets.js"; 
+        js.src="../twitter/widgets.js"
         js.async = false; 
         console.log(js);
         console.log(fjs);
