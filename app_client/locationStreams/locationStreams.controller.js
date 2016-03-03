@@ -112,10 +112,6 @@
     //this is required to get the twitter widget because of angular related twitter bug
 
     window.twttr = (function (d,s,id) {
-        console.log('here in window.twttr');
-        console.log(d);
-        console.log(s);
-        console.log(id);
         
         var t, js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) 
@@ -123,17 +119,9 @@
         js=d.createElement(s); 
         console.log(js);
         js.id=id;
-        console.log(fjs);
-        while(d.getElementsByTagName(s).length < 1)
-            {
-                console.log(here);
-            }
-        //js.src="https://platform.twitter.com/widgets.js"; 
-        js.src="../twitter/widgets.js"
-        js.async = false; 
-        console.log(js);
-        console.log(fjs);
-        console.log(d.getElementsByTagName(s));
+        js.src="https://platform.twitter.com/widgets.js"; 
+        //js.src="../twitter/widgets.js"
+        js.async = true; 
         
         fjs.parentNode.insertBefore(js, fjs);
         
@@ -144,6 +132,7 @@
     
     
      function loadTweetsDelay(){
+         window.twttr.widgets.load();
         console.log('here')
          setTimeout(function(){
              window.twttr.ready(function(twttr){
