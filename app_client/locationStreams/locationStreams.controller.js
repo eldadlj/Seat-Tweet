@@ -127,8 +127,8 @@
         js.src="https://platform.twitter.com/widgets.js"; 
         console.log(js);
         console.log(fjs);
-        console.log(t);
-        debugger;
+        console.log(d.getElementsByTagName(s));
+        
         fjs.parentNode.insertBefore(js, fjs);
         
         return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
