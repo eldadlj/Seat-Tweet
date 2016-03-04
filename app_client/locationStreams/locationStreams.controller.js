@@ -132,7 +132,7 @@
     
     
      function loadTweetsDelay(){
-         window.twttr.widgets.load();
+         //window.twttr.widgets.load();
         console.log('here')
          setTimeout(function(){
              window.twttr.ready(function(twttr){
