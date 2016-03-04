@@ -111,22 +111,22 @@
     }
     //this is required to get the twitter widget because of angular related twitter bug
 
-    /*window.twttr = (function (d,s,id) {
-        
-        var t, js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) 
-            return; 
-        js=d.createElement(s); 
-        console.log(js);
-        js.id=id;
-        js.src="https://platform.twitter.com/widgets.js"; 
-        //js.src="../twitter/widgets.js"
-        js.async = true; 
-        
-        fjs.parentNode.insertBefore(js, fjs);
-        
-        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
-        }(document, "script", "twitter-wjs"));*/
+    window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));
     
         
     

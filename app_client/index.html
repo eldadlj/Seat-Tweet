@@ -17,23 +17,5 @@
         <script src="/javascripts/jquery-2.1.4.min.js"></script>
         <script src="/bootstrap/js/bootstrap.min.js"></script>
         <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
-        <script>
-        window.twttr = (function (d,s,id) {
-        
-        var t, js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) 
-            return; 
-        js=d.createElement(s); 
-        console.log(js);
-        js.id=id;
-        js.src="https://platform.twitter.com/widgets.js"; 
-        //js.src="../twitter/widgets.js"
-        js.async = true; 
-        
-        fjs.parentNode.insertBefore(js, fjs);
-        
-        return window.twttr || (t = { _e: [], ready: function(f){ t._e.push(f) } });
-        }(document, "script", "twitter-wjs"));
-        </script>
     </body>
 </html>
