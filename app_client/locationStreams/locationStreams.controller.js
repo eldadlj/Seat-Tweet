@@ -8,6 +8,7 @@
   js.id = id;
   js.src = "https://platform.twitter.com/widgets.js";
         console.log(js);
+  js.async=false;
   fjs.parentNode.insertBefore(js, fjs);
  
   t._e = [];
