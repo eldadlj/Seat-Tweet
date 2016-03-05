@@ -117,7 +117,9 @@
         if (d.getElementById(id)) return t;
         js = d.createElement(s);
         js.id = id;
-        js.src = "https://platform.twitter.com/widgets.js";
+        //js.src = "https://platform.twitter.com/widgets.js";
+        js.src = "../twitter/widgets.js";
+
         console.log(js);
 
         fjs.parentNode.insertBefore(js, fjs);
