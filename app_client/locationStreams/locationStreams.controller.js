@@ -50,6 +50,7 @@
                         }  
                     streams.push(element);
                 });
+            console.log('got me some tweets');
                 socket.on('tweet', function(t){
                     vm.newTweetsCount++;
                     //t.date = new Date(t.date);
