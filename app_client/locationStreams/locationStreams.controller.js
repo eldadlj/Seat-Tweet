@@ -15,7 +15,6 @@
  
   return t;
 }(document, "script", "twitter-wjs"));
-    
     angular
         .module('seattweetApp')
         .controller('locationStreamsCtrl', locationStreamsCtrl);
@@ -134,7 +133,9 @@
          setTimeout(function(){
              window.twttr.ready(function(twttr){
                  console.log(twttr);
-            twttr.widgets.load();
+            twttr.widgets.load(
+                document.getElementById("tweets-repeat")
+);
                  });
                 }, 1000);
      }
