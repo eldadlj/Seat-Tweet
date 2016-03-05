@@ -11,7 +11,7 @@
                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-show="vm.newTweetsCount > 0" ng-click="loadNewStreams()">New Streams Count: {{vm.newTweetsCount}}</button>
             </div>
             <div class="row list-group">
-                <div class="stream col-xs-8 list-group-item" ng-repeat="tweet in vm.data.tweets | orderBy: '-date'">
+                <div id="tweets-repeat" class="stream col-xs-8 list-group-item" ng-repeat="tweet in vm.data.tweets | orderBy: '-date'">
                     <div class="instagrmDiv" ng-show="{{tweet.containsInstagram}}">
                         <img class="instagramImg" src="{{tweet.instagram}}">
                     </div>

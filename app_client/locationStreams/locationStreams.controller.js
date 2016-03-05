@@ -1,23 +1,4 @@
 (function(){
-    window.twttr = (function(d, s, id) {
-        console.log(d.getElementsByTagName(s));
-  var js, fjs = d.getElementsByTagName(s)[0],
-    t = window.twttr || {};
-  if (d.getElementById(id)) return t;
-  js = d.createElement(s);
-  js.id = id;
-  js.src = "https://platform.twitter.com/widgets.js";
-        console.log(js);
-  js.async=false;
-  fjs.parentNode.insertBefore(js, fjs);
- 
-  t._e = [];
-  t.ready = function(f) {
-    t._e.push(f);
-  };
- 
-  return t;
-}(document, "script", "twitter-wjs"));
     angular
         .module('seattweetApp')
         .controller('locationStreamsCtrl', locationStreamsCtrl);
@@ -50,7 +31,6 @@
                         }  
                     streams.push(element);
                 });
-            console.log('got me some tweets');
                 socket.on('tweet', function(t){
                     vm.newTweetsCount++;
                     //t.date = new Date(t.date);
@@ -62,7 +42,7 @@
             vm.data = { tweets: streams };
             vm.totalStreamsLoaded = vm.data.tweets.length;
             console.log('locationStreamsById');
-            $timeout(loadTweetsDelay(), 0);
+            $timeout(loadTweetsDelay(), 500);
             //window.onload();
             
         })
@@ -130,16 +110,32 @@
         }
     }
         
+    window.twttr = (function(d, s, id) {
+        console.log(d.getElementsByTagName(s));
+        var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        console.log(js);
+
+        fjs.parentNode.insertBefore(js, fjs);
+        t._e = [];
+        t.ready = function(f) {
+            t._e.push(f);
+        };
+
+      return t;
+    }(document, "script", "twitter-wjs"));
     
      function loadTweetsDelay(){
-         //window.twttr.widgets.load();
+         window.twttr.widgets.load();
         console.log('here')
          setTimeout(function(){
              window.twttr.ready(function(twttr){
                  console.log(twttr);
-            twttr.widgets.load(
-                document.getElementById("tweets-repeat")
-);
+            twttr.widgets.load();
                  });
                 }, 1000);
      }
