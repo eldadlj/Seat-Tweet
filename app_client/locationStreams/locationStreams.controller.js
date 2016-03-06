@@ -112,9 +112,10 @@
     
      function loadTweetsDelay(){
          setTimeout(function(){
+             window.twttr.widgets.load();
              window.twttr.ready(function(twttr){
                 twttr.widgets.load();
                  });
-                }, 1000);
+                }, 500);
      }
 })();
