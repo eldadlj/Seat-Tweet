@@ -110,7 +110,7 @@
         }
     }
         
-    window.twttr = (function(d, s, id) {
+    /*window.twttr = (function(d, s, id) {
         console.log(d.getElementsByTagName(s));
         var js, fjs = d.getElementsByTagName(s)[0],
         t = window.twttr || {};
@@ -130,13 +130,13 @@
 
       return t;
     }(document, "script", "twitter-wjs"));
+    */
     
      function loadTweetsDelay(){
         console.log('here')
          setTimeout(function(){
              window.twttr.ready(function(twttr){
-                 console.log(twttr);
-            twttr.widgets.load();
+                twttr.widgets.load();
                  });
                 }, 1000);
      }
