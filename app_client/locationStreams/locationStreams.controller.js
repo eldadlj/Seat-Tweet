@@ -66,19 +66,12 @@
                 });
                 vm.data = { tweets: streams };
                 vm.totalStreamsLoaded = vm.data.tweets.length;
-                console.log('loadNewStreams');
                 $timeout(loadTweetsDelay(), 0);
             })
             .error(function(e){
                 console.log(e);
             });
         }
-        
-        //TODO: Need to figure out the twitter load problem with angular
-        /*$document.ready(function() {
-            console.log('$document.ready');
-            loadTweetsDelay();
-        });*/
         
         
         $scope.$on("$destroy", function(){
@@ -114,6 +107,7 @@
          setTimeout(function(){
              window.twttr.widgets.load();
              window.twttr.ready(function(twttr){
+                 console.log('ready');
                 twttr.widgets.load();
                  });
                 }, 500);

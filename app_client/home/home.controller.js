@@ -10,7 +10,7 @@
     function homeCtrl (locationsData){
         var vm = this;
         vm.pageHeader = {
-            title: 'BLEACHEERZ',
+            //title: 'BLEACHEERZ',
             strapline: 'Find the best tweets from sporting events'
         };
         vm.sports = [{
