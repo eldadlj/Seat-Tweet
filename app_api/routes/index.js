@@ -7,6 +7,7 @@ module.exports = function(io){
     var ctrlLocations = require('../controllers/locations');
     var ctrlStreams = require('../controllers/locationStreams');
     var ctrlAuth = require('../controllers/authentication');
+    var auth = new ctrlAuth(passport);
     var stream = new ctrlStreams(io);
 
     //Ctrl Locations
@@ -17,14 +18,11 @@ module.exports = function(io){
     router.get('/location-stream/:locationid', stream.locationStreams);
     
     //twitter authentication
-    router.get('/login', passport.authenticate('twitter'));
-    router.get('/login_cb', passport.authenticate('twitter', {
-            successRedirect : '/successLogin',
-            failureRedirect : '/failLogin'
-        }));
+    router.get('/login', auth.login);// passport.authenticate('twitter'));
+    router.get('/login_cb', auth.loging_cb);
     
-    router.get('/successLogin', ctrlAuth.successLogin);
-    router.get('/failLogin', ctrlAuth.failLogin);
+    router.get('/successLogin', auth.successLogin);
+    router.get('/failLogin', auth.failLogin);
 
     return router;
 }

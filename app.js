@@ -33,7 +33,9 @@ var appClientFiles = [
     'app_client/about/about.controller.js',
     'app_client/locationStreams/locationStreams.controller.js',
     'app_client/leftNavigation/leftNavigation.controller.js',
+    'app_client/navigation/navigation.controller.js',
     'app_client/common/services/locations.service.js',
+    'app_client/common/services/authentication.service.js',
     'app_client/common/factories/socket.factory.js',
     'app_client/common/directives/ratingStars/ratingStars.directive.js',
     'app_client/common/directives/footerGeneric/footerGeneric.directive.js',
@@ -79,7 +81,7 @@ app.use(passport.session());
 app.use('/api', routesApi);
 app.use('/users', users);
 app.use(function(req, res){
-    res.sendfile(path.join(__dirname, 'app_client', 'index.html'));
+    res.sendFile(path.join(__dirname, 'app_client', 'index.html'));
 });
 
 // catch 404 and forward to error handler
